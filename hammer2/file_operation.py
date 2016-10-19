@@ -44,7 +44,7 @@ def find_hash_folder(i):
 		print  ('Find folder for input: {}'.format(i))
 		return full_folder_path
 	else:
-		print ('Could not find folder for input: {}'.format(i))
+		print ('Can not find folder for input: {}'.format(i))
 		return None
 
 def post_file(id, sql, modified_date): 
@@ -53,6 +53,7 @@ def post_file(id, sql, modified_date):
 	file_path = os.path.join(folder,file_name)
 
 	with open(file_path, 'w') as sql_file:
+		print ('writing: id: {}, folder: {},file: {}, sql: {}'.format(id,folder,file_name,sql))
 		sql_file.write(sql)
 	sql_file.close()
 
@@ -60,10 +61,10 @@ def get_file(id):
 	folder = find_hash_folder(id)	
 	if folder:
 		files = sorted(os.listdir(folder))		
-	else:
-		print ('cannot find folder for {}'.format(id))
-		# error
+	else:		 
+		# error -> no folder
 		return 
+
 	if files:
 		file_name = files[-1]
 		with open(os.path.join(folder,file_name),'r') as sql:
@@ -71,19 +72,25 @@ def get_file(id):
 		sql.close()
 	else:
 		print ('id: {}, folder: {}, no file!!!'.format(id, folder))
-	 
+	 	# error -> no file 
 		
 
 # Start execution here!
 if __name__ == '__main__':
 	print("Starting job population script...")
-	# post_file(1,'test_sql_111', datetime.datetime.now())
-	# post_file(2,'test_sql_222', datetime.datetime.now())
-	# post_file(3,'test_sql_333', datetime.datetime.now())
- # 	create_hash_folder(4)
+	
+	i = 0
+	while i < 3:
+		for j in range (1,4):
+			id = j
+			sql = 'test_sql'+str(i)+str(j)
+			# print (sql)
+			post_file(j,sql,datetime.datetime.now())
+		i+=1
 
- 	get_file(1)
- 	get_file(2)
- 	get_file(3)
- 	get_file(4)
-  	get_file(5)
+	create_hash_folder(4)
+
+	for i in range (1,6):
+		# print i
+		get_file(i)
+ 	print ('Done!!!')

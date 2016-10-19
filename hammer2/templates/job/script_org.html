@@ -1,0 +1,31 @@
+<!DOCTYPE html> 
+
+<html>
+<head>
+<title>HAMMER II</title>
+</head>
+<body>
+<h1>HAMMER II says...</h1>
+<div>hey there I am the little bro of HAMMER :)
+
+</div>
+
+<div> 
+{% if scripts %}
+<ul>
+{% for script in scripts %}
+<li> <a>{{ script.script_name}}</a> 
+	 <b>{{ script.version_number}}</b> 
+</li> 
+{% endfor %}
+</ul> 
+{% else %}
+<strong>There are no Scripts present.</strong>
+{% endif %}
+</div>
+
+<div>
+<a href="/job/index/">Home</a><br /> 
+</div>
+</body>
+</html>
